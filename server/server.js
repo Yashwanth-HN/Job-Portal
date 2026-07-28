@@ -5,6 +5,7 @@ const cors = require("cors");
 const authRoutes = require("./routes/authRoutes");
 const jobRoutes = require("./routes/jobRoutes");
 const applicationRoutes = require("./routes/applicationRoutes");
+const errorHandler = require("./middleware/errorMiddleware");
 
 dotenv.config();
 
@@ -23,13 +24,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
 
-// Test route
-app.get("/api/test", (req, res) => {
-  res.json({
-    success: true,
-    message: "Job Portal API is working!",
-  });
-});
+
+app.use(errorHandler);
 
 // Start server
 app.listen(PORT, () => {
