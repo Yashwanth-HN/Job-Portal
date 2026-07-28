@@ -15,10 +15,10 @@ const applicationSchema = new mongoose.Schema(
     },
 
     status: {
-      type: String,
-      enum: ["applied", "reviewing", "accepted", "rejected"],
-      default: "applied",
-    },
+  type: String,
+  enum: ["pending", "accepted", "rejected"],
+  default: "pending",
+   },
   },
   {
     timestamps: true,

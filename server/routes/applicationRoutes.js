@@ -6,6 +6,7 @@ const {
   applyJob,
   getMyApplications,
   getJobApplicants,
+  updateApplicationStatus,
 } = require("../controllers/applicationController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -17,6 +18,13 @@ router.get(
   protect,
   authorize("jobseeker"),
   getMyApplications
+);
+
+router.patch(
+  "/:applicationId/status",
+  protect,
+  authorize("recruiter"),
+  updateApplicationStatus
 );
 
 router.get(
