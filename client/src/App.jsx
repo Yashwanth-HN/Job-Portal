@@ -1,25 +1,38 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import MainLayout from "./layouts/MainLayout";
+
+import Home from "./pages/public/Home";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import RecruiterDashboard from "./pages/recruiter/RecruiterDashboard";
+import JobSeekerDashboard from "./pages/jobseeker/JobSeekerDashboard";
+import Jobs from "./pages/public/Jobs";
+import Companies from "./pages/public/Companies";
+import About from "./pages/public/About";
 
 function App() {
-  const [message, setMessage] = useState("Connecting to backend...");
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/test")
-      .then((response) => response.json())
-      .then((data) => {
-        setMessage(data.message);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        setMessage("Failed to connect to backend");
-      });
-  }, []);
-
   return (
-    <div>
-      <h1>MERN Job Portal</h1>
-      <h2>{message}</h2>
-    </div>
+    <BrowserRouter>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/recruiter/dashboard"
+            element={<RecruiterDashboard />}
+          />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/companies" element={<Companies />} />
+          <Route path="/about" element={<About />} />
+          <Route
+            path="/jobseeker/dashboard"
+            element={<JobSeekerDashboard />}
+          />
+        </Routes>
+      </MainLayout>
+    </BrowserRouter>
   );
 }
 
