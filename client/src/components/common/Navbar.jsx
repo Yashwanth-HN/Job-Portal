@@ -2,10 +2,19 @@ import { NavLink } from "react-router-dom";
 import { FaBriefcase } from "react-icons/fa";
 import { HiMenu, HiX } from "react-icons/hi";
 import { useState } from "react";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+  logout();
+  navigate("/login");
+  };
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Jobs", path: "/jobs" },
@@ -51,19 +60,36 @@ function Navbar() {
 
         <div className="hidden md:flex items-center gap-3">
 
-          <NavLink
-            to="/login"
-            className="px-5 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 transition"
-          >
-            Login
-          </NavLink>
+          {user ? (
+  <div className="flex items-center gap-4">
+    <span className="font-medium">
+      Welcome, {user.name}
+    </span>
 
-          <NavLink
-            to="/register"
-            className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
-          >
-            Register
-          </NavLink>
+    <button
+      onClick={handleLogout}
+      className="px-5 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+    >
+      Logout
+    </button>
+  </div>
+) : (
+  <div className="flex items-center gap-3">
+    <NavLink
+      to="/login"
+      className="px-5 py-2 rounded-lg border border-blue-600 text-blue-600 hover:bg-blue-50 transition"
+    >
+      Login
+    </NavLink>
+
+    <NavLink
+      to="/register"
+      className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+    >
+      Register
+    </NavLink>
+  </div>
+)}
 
         </div>
 
