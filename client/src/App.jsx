@@ -14,6 +14,8 @@ import { ToastContainer } from "react-toastify";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import JobDetails from "./pages/public/JobDetails";
+
 
 function App() {
   return (
@@ -39,6 +41,7 @@ function App() {
             path="/reset-password/:token"
             element={<ResetPassword />}
           />
+          <Route path="/jobs/:id" element={<JobDetails />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/companies" element={<Companies />} />
           <Route path="/about" element={<About />} />

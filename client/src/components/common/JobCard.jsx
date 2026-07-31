@@ -1,4 +1,5 @@
 import { FaMapMarkerAlt, FaBriefcase } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function JobCard({ job }) {
   return (
@@ -26,9 +27,12 @@ function JobCard({ job }) {
         ₹ {job.salary}
       </p>
 
-      <button className="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition">
-        Apply Now
-      </button>
+      <Link
+        to={`/jobs/${job._id}`}
+        className="block mt-6 text-center bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition"
+      >
+        View Details
+      </Link>
 
     </div>
   );
