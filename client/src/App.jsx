@@ -15,6 +15,16 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import JobDetails from "./pages/public/JobDetails";
+import RecruiterLayout from "./layouts/RecruiterLayout";
+
+import MyJobs from "./pages/recruiter/MyJobs";
+import CreateJob from "./pages/recruiter/CreateJob";
+import Applicants from "./pages/recruiter/Applicants";
+import EditJob from "./pages/recruiter/EditJob";
+import JobSeekerLayout from "./layouts/JobSeekerLayout";
+
+import MyApplications from "./pages/jobseeker/MyApplications";
+import Profile from "./pages/jobseeker/Profile";
 
 
 function App() {
@@ -26,13 +36,26 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/recruiter/dashboard"
+            path="/recruiter"
             element={
               <ProtectedRoute role="recruiter">
-                <RecruiterDashboard />
+                <RecruiterLayout />
               </ProtectedRoute>
             }
-          />
+          >
+            <Route
+              path="dashboard"
+              element={<RecruiterDashboard />}
+            />
+            <Route path="jobs" element={<MyJobs />} />
+            <Route path="create-job" element={<CreateJob />} />
+            <Route path="applicants/:jobId" element={<Applicants />}
+/>
+            <Route
+              path="edit-job/:id"
+              element={<EditJob />}
+            />
+          </Route>
           <Route
             path="/forgot-password"
             element={<ForgotPassword />}
@@ -46,13 +69,28 @@ function App() {
           <Route path="/companies" element={<Companies />} />
           <Route path="/about" element={<About />} />
           <Route
-              path="/jobseeker/dashboard"
-              element={
-                <ProtectedRoute role="jobseeker">
-                  <JobSeekerDashboard />
-                </ProtectedRoute>
-              }
+            path="/jobseeker"
+            element={
+              <ProtectedRoute role="jobseeker">
+                <JobSeekerLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route
+                  path="dashboard"
+                  element={<JobSeekerDashboard />}
+                />
+
+            <Route
+              path="applications"
+              element={<MyApplications />}
             />
+
+            <Route
+              path="profile"
+              element={<Profile />}
+            />
+          </Route>
         </Routes>
         <ToastContainer
         position="top-right"

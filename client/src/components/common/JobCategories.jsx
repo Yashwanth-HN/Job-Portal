@@ -5,6 +5,7 @@ import {
   FaMobileAlt,
   FaCloud,
   FaShieldAlt,
+  FaArrowRight,
 } from "react-icons/fa";
 
 const categories = [
@@ -42,43 +43,85 @@ const categories = [
 
 function JobCategories() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-24 bg-white">
+
       <div className="max-w-7xl mx-auto px-6">
 
-        <h2 className="text-4xl font-bold text-center mb-3">
-          Browse by Category
-        </h2>
+        {/* Heading */}
 
-        <p className="text-center text-gray-600 mb-12">
-          Explore opportunities across the most in-demand industries.
-        </p>
+        <div className="text-center mb-16">
+
+          <span className="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full font-medium">
+            Popular Categories
+          </span>
+
+          <h2 className="text-5xl font-bold mt-6">
+            Browse by Category
+          </h2>
+
+          <p className="text-gray-600 mt-5 max-w-2xl mx-auto text-lg leading-8">
+            Discover opportunities across the fastest-growing
+            industries and find the perfect role that matches
+            your skills and career goals.
+          </p>
+
+        </div>
+
+        {/* Categories */}
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
           {categories.map((category) => {
             const Icon = category.icon;
 
             return (
               <div
                 key={category.name}
-                className="bg-white rounded-2xl p-8 shadow hover:shadow-xl transition duration-300 cursor-pointer hover:-translate-y-2"
+                className="group bg-white rounded-3xl border border-gray-200 p-8 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 cursor-pointer"
               >
-                <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mb-6">
-                  <Icon className="text-blue-600 text-3xl" />
+
+                {/* Icon */}
+
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg">
+
+                  <Icon className="text-white text-3xl" />
+
                 </div>
 
-                <h3 className="text-xl font-semibold">
+                {/* Title */}
+
+                <h3 className="text-2xl font-bold mt-8">
                   {category.name}
                 </h3>
 
-                <p className="text-gray-500 mt-2">
-                  {category.jobs}
-                </p>
+                {/* Jobs */}
+
+                <div className="mt-4">
+
+                  <span className="inline-block bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                    {category.jobs}
+                  </span>
+
+                </div>
+
+                {/* Explore */}
+
+                <div className="mt-8 flex items-center gap-2 text-blue-600 font-semibold group-hover:gap-4 transition-all">
+
+                  Explore
+
+                  <FaArrowRight />
+
+                </div>
+
               </div>
             );
           })}
+
         </div>
 
       </div>
+
     </section>
   );
 }

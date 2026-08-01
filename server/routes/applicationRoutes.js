@@ -7,12 +7,18 @@ const {
   getMyApplications,
   getJobApplicants,
   updateApplicationStatus,
+  getDashboardStats,
 } = require("../controllers/applicationController");
 
 const { protect } = require("../middleware/authMiddleware");
 const authorize = require("../middleware/roleMiddleware");
 
-
+router.get(
+  "/dashboard-stats",
+  protect,
+  authorize("jobseeker"),
+  getDashboardStats
+);
 router.get(
   "/my",
   protect,

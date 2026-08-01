@@ -3,13 +3,27 @@ const express = require("express");
 const router = express.Router();
 
 const { createJob, getAllJobs,
-  getJobById,updateJob,
+  getJobById,getMyJobs,updateJob,getDashboardStats,
   deleteJob, } = require("../controllers/jobController");
 const { protect } = require("../middleware/authMiddleware");
 const authorize = require("../middleware/roleMiddleware");
 
 
 router.get("/", getAllJobs);
+
+router.get(
+  "/my-jobs",
+  protect,
+  authorize("recruiter"),
+  getMyJobs
+);
+
+router.get(
+  "/dashboard-stats",
+  protect,
+  authorize("recruiter"),
+  getDashboardStats
+);
 
 router.get("/:id", getJobById);
 

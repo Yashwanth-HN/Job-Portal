@@ -1,18 +1,29 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { FaBriefcase, FaEye, FaEyeSlash } from "react-icons/fa";
+import {
+  FaEye,
+  FaEyeSlash,
+  FaLock,
+  FaKey,
+  FaPaperPlane,
+} from "react-icons/fa";
 import { toast } from "react-toastify";
 import { resetPassword } from "../../services/authService";
+import logo from "../../assets/logo/careernest-logo.png";
 
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
 
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] =
+    useState("");
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showPassword, setShowPassword] =
+    useState(false);
+
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
 
   const [loading, setLoading] = useState(false);
 
@@ -36,11 +47,10 @@ const ResetPassword = () => {
       setTimeout(() => {
         navigate("/login");
       }, 1500);
-
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
-        "Something went wrong"
+          "Something went wrong"
       );
     } finally {
       setLoading(false);
@@ -49,58 +59,73 @@ const ResetPassword = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
-      <div className="max-w-5xl w-full bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
 
-        {/* Left Side */}
+      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden grid md:grid-cols-2">
 
-        <div className="bg-blue-600 text-white p-10 flex flex-col justify-center">
+        {/* LEFT PANEL */}
 
-          <div className="flex items-center gap-3 mb-6">
-            <FaBriefcase className="text-4xl" />
-            <h1 className="text-3xl font-bold">
-              JobPortal
-            </h1>
-          </div>
+        <div className="relative bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 text-white p-14 flex flex-col justify-center">
 
-          <h2 className="text-4xl font-bold leading-tight">
-            Reset Password
-          </h2>
+          <img
+            src={logo}
+            alt="CareerNest"
+            className="h-50 w-auto mb-12"
+          />
 
-          <p className="mt-6 text-blue-100">
-            Create a strong new password to secure your account.
+          <h1 className="text-5xl font-bold leading-tight">
+            Create a New Password
+          </h1>
+
+          <p className="mt-8 text-blue-100 text-xl leading-9 max-w-md">
+            Choose a strong password to secure your
+            CareerNest account. Make sure it's easy
+            for you to remember and difficult for
+            others to guess.
           </p>
+
+          {/* Decorative Paper Plane */}
+
+          <div className="absolute bottom-10 right-10 opacity-20 rotate-12">
+            <FaPaperPlane className="text-[90px]" />
+          </div>
 
         </div>
 
-        {/* Right Side */}
+        {/* RIGHT PANEL */}
 
-        <div className="p-10">
+        <div className="p-14 flex flex-col justify-center">
 
-          <h2 className="text-3xl font-bold mb-8">
-            Create New Password
+          <h2 className="text-5xl font-bold mb-12">
+            Reset Password
           </h2>
 
           <form
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="space-y-8"
           >
 
             {/* Password */}
 
             <div>
 
-              <label className="font-medium">
+              <label className="block font-semibold mb-3 text-lg">
                 New Password
               </label>
 
-              <div className="relative mt-2">
+              <div className="relative">
+
+                <FaLock className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 
                 <input
-                  type={showPassword ? "text" : "password"}
+                  type={
+                    showPassword ? "text" : "password"
+                  }
                   placeholder="Enter new password"
-                  className="w-full border rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border-2 rounded-2xl pl-14 pr-14 py-4 text-lg outline-none focus:ring-2 focus:ring-blue-500 transition"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) =>
+                    setPassword(e.target.value)
+                  }
                   required
                 />
 
@@ -109,12 +134,12 @@ const ResetPassword = () => {
                   onClick={() =>
                     setShowPassword(!showPassword)
                   }
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 >
                   {showPassword ? (
-                    <FaEyeSlash />
+                    <FaEyeSlash size={20} />
                   ) : (
-                    <FaEye />
+                    <FaEye size={20} />
                   )}
                 </button>
 
@@ -126,11 +151,13 @@ const ResetPassword = () => {
 
             <div>
 
-              <label className="font-medium">
+              <label className="block font-semibold mb-3 text-lg">
                 Confirm Password
               </label>
 
-              <div className="relative mt-2">
+              <div className="relative">
+
+                <FaLock className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
 
                 <input
                   type={
@@ -139,10 +166,12 @@ const ResetPassword = () => {
                       : "password"
                   }
                   placeholder="Confirm new password"
-                  className="w-full border rounded-xl px-4 py-3 pr-12 outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full border-2 rounded-2xl pl-14 pr-14 py-4 text-lg outline-none focus:ring-2 focus:ring-blue-500 transition"
                   value={confirmPassword}
                   onChange={(e) =>
-                    setConfirmPassword(e.target.value)
+                    setConfirmPassword(
+                      e.target.value
+                    )
                   }
                   required
                 />
@@ -154,12 +183,12 @@ const ResetPassword = () => {
                       !showConfirmPassword
                     )
                   }
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                 >
                   {showConfirmPassword ? (
-                    <FaEyeSlash />
+                    <FaEyeSlash size={20} />
                   ) : (
-                    <FaEye />
+                    <FaEye size={20} />
                   )}
                 </button>
 
@@ -170,8 +199,10 @@ const ResetPassword = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl text-xl font-semibold flex items-center justify-center gap-3 transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
+              <FaKey />
+
               {loading
                 ? "Updating..."
                 : "Reset Password"}
@@ -182,6 +213,7 @@ const ResetPassword = () => {
         </div>
 
       </div>
+
     </div>
   );
 };

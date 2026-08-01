@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { FaBriefcase } from "react-icons/fa";
-
+import logo from "../../assets/logo/careernest-logo.png";
 import { useForm } from "react-hook-form";
 import { registerUser } from "../../services/authService";
 import { toast } from "react-toastify";
@@ -48,17 +48,20 @@ const onSubmit = async (data) => {
 
         {/* Left */}
         <div className="bg-blue-600 text-white p-10 flex flex-col justify-center">
-          <div className="flex items-center gap-3 mb-6">
-            <FaBriefcase className="text-4xl" />
-            <h1 className="text-3xl font-bold">JobPortal</h1>
-          </div>
+          <div className="mb-8">
+              <img
+                src={logo}
+                alt="CareerNest"
+                className="h-80 w-auto"
+              />
+            </div>
 
           <h2 className="text-4xl font-bold">
             Join Our Community
           </h2>
 
           <p className="mt-6 text-blue-100">
-            Create an account and connect with top companies and exciting opportunities.
+            Join CareerNest today and connect with leading companies, discover exciting opportunities, and build the career you've always wanted.
           </p>
         </div>
 
@@ -66,7 +69,7 @@ const onSubmit = async (data) => {
         <div className="p-10">
 
           <h2 className="text-3xl font-bold mb-8">
-            Create Account
+            Start Your Career Journey
           </h2>
 
           <form
@@ -206,7 +209,7 @@ const onSubmit = async (data) => {
           </form>
 
           <p className="mt-8 text-center">
-            Already have an account?{" "}
+            Already a member of CareerNest?{" "}
             <Link
               to="/login"
               className="text-blue-600 font-semibold"

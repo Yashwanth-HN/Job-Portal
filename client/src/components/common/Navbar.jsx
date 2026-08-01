@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import logo from "../../assets/logo/careernest-horizontal.png";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,14 +28,13 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
-        <NavLink
-          to="/"
-          className="flex items-center gap-2 text-blue-600 font-bold text-2xl"
-        >
-          <FaBriefcase />
-          <span>JobPortal</span>
+        <NavLink to="/" className="flex items-center">
+          <img
+            src={logo}
+            alt="CareerNest"
+            className="h-12 w-auto"
+          />
         </NavLink>
-
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center gap-8">
 
@@ -59,21 +59,33 @@ function Navbar() {
         {/* Desktop Buttons */}
 
         <div className="hidden md:flex items-center gap-3">
+      {user ? (
+        <div className="flex items-center gap-4">
 
-          {user ? (
-  <div className="flex items-center gap-4">
-    <span className="font-medium">
-      Welcome, {user.name}
-    </span>
+          <span className="font-medium">
+            Welcome, {user.name}
+          </span>
 
-    <button
-      onClick={handleLogout}
-      className="px-5 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
-    >
-      Logout
-    </button>
-  </div>
-) : (
+          <NavLink
+            to={
+              user.role === "recruiter"
+                ? "/recruiter/dashboard"
+                : "/jobseeker/dashboard"
+            }
+            className="px-5 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition"
+          >
+            Dashboard
+          </NavLink>
+
+          <button
+            onClick={handleLogout}
+            className="px-5 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
+          >
+            Logout
+          </button>
+
+        </div>
+      ) : (
   <div className="flex items-center gap-3">
     <NavLink
       to="/login"

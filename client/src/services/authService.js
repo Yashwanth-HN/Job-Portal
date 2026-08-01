@@ -28,3 +28,14 @@ export const resetPassword = async (token, passwordData) => {
 
   return response.data;
 };
+
+
+export const getProfile = async () => {
+  const response = await api.get("/auth/profile");
+  return response.data;
+};
+
+export const updateProfile = async (userData) => {
+  const response = await api.put("/auth/profile", userData);
+  return response.data;
+};

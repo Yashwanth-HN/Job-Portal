@@ -43,6 +43,48 @@ const applyJob = async (req, res) => {
     });
   }
 };
+// @desc    Jobseeker Dashboard Stats
+// @route   GET /api/applications/dashboard-stats
+// @access  Private - Jobseeker
+
+const getDashboardStats = async (req, res) => {
+  try {
+    const applications = await Application.find({
+  applicant: req.user.id,
+}).populate("job");
+
+// Ignore applications whose job has been deleted
+const validApplications = applications.filter(
+  (app) => app.job !== null
+);;
+
+    const totalApplied = validApplications.length;
+
+    const accepted = validApplications.filter(
+      (app) => app.status === "accepted"
+    ).length;
+
+    const pending = validApplications.filter(
+      (app) => app.status === "pending"
+    ).length;
+
+    const rejected = validApplications.filter(
+      (app) => app.status === "rejected"
+    ).length;
+
+    res.json({
+      success: true,
+      totalApplied,
+      accepted,
+      pending,
+      rejected,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 
 const getMyApplications = async (req, res) => {
   try {
@@ -163,4 +205,5 @@ module.exports = {
   getMyApplications,
   getJobApplicants,
   updateApplicationStatus,
+  getDashboardStats,
 };

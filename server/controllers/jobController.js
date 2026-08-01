@@ -44,7 +44,40 @@ const createJob = async (req, res,next) => {
   }
 };
 
+// @desc    Recruiter Dashboard Stats
+// @route   GET /api/jobs/dashboard-stats
+// @access  Private - Recruiter
 
+const getDashboardStats = async (req, res) => {
+  try {
+    const totalJobs = await Job.countDocuments({
+      createdBy: req.user._id,
+    });
+
+    const jobs = await Job.find({
+      createdBy: req.user._id,
+    }).select("_id");
+
+    const jobIds = jobs.map((job) => job._id);
+
+    const Application = require("../models/Application");
+
+    const totalApplicants = await Application.countDocuments({
+      job: { $in: jobIds },
+    });
+
+    res.status(200).json({
+      success: true,
+      totalJobs,
+      totalApplicants,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 // @desc    Get all jobs with search and filters
 // @route   GET /api/jobs
 // @access  Public
@@ -106,6 +139,29 @@ const getAllJobs = async (req, res) => {
   count: jobs.length,
   jobs,
 });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// @desc    Get jobs created by logged-in recruiter
+// @route   GET /api/jobs/my-jobs
+// @access  Private - Recruiter
+
+const getMyJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({
+      createdBy: req.user._id,
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: jobs.length,
+      jobs,
+    });
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -257,6 +313,8 @@ const deleteJob = async (req, res) => {
 module.exports = {
   createJob,
   getAllJobs,
+  getMyJobs,
+  getDashboardStats,
   getJobById,
   updateJob,
   deleteJob,

@@ -1,8 +1,13 @@
-import { FaBriefcase } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { forgotPassword } from "../../services/authService";
+import logo from "../../assets/logo/careernest-logo.png";
+
+import {
+  FaEnvelope,
+  FaPaperPlane,
+} from "react-icons/fa";
 
 function ForgotPassword() {
   const {
@@ -16,10 +21,9 @@ function ForgotPassword() {
     try {
       const response = await forgotPassword(data);
 
-toast.success(response.message);
+      toast.success(response.message);
 
       reset();
-
     } catch (error) {
       toast.error(
         error.response?.data?.message ||
@@ -30,63 +34,82 @@ toast.success(response.message);
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-6">
-      <div className="max-w-5xl w-full bg-white rounded-3xl shadow-xl overflow-hidden grid md:grid-cols-2">
 
-        {/* Left Side */}
-        <div className="bg-blue-600 text-white p-10 flex flex-col justify-center">
+      <div className="max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden grid md:grid-cols-2">
 
-          <div className="flex items-center gap-3 mb-6">
-            <FaBriefcase className="text-4xl" />
-            <h1 className="text-3xl font-bold">
-              JobPortal
-            </h1>
-          </div>
+        {/* LEFT PANEL */}
 
-          <h2 className="text-4xl font-bold leading-tight">
-            Forgot Password?
-          </h2>
+        <div className="relative bg-gradient-to-br from-blue-700 via-blue-600 to-blue-800 text-white p-14 flex flex-col justify-center">
 
-          <p className="mt-6 text-blue-100">
-            Enter your registered email address.
-            We'll send you a password reset link.
+          <img
+            src={logo}
+            alt="CareerNest"
+            className="h-50 w-auto mb-12"
+          />
+
+          <h1 className="text-5xl font-bold leading-tight">
+            Forgot Your Password?
+          </h1>
+
+          <p className="mt-8 text-blue-100 text-xl leading-9 max-w-md">
+            Don't worry! Enter your registered email
+            address and we'll send you a secure password
+            reset link to help you regain access to your
+            CareerNest account.
           </p>
+
+          {/* Decorative Plane */}
+
+          <div className="absolute bottom-10 right-10 opacity-20 rotate-12">
+
+            <FaPaperPlane className="text-[90px]" />
+
+          </div>
 
         </div>
 
-        {/* Right Side */}
+        {/* RIGHT PANEL */}
 
-        <div className="p-10">
+        <div className="p-14 flex flex-col justify-center">
 
-          <h2 className="text-3xl font-bold mb-8">
-            Reset Password
+          <h2 className="text-5xl font-bold mb-12">
+            Forgot Password
           </h2>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="space-y-6"
+            className="space-y-8"
           >
 
             <div>
 
-              <label className="font-medium">
+              <label className="block font-semibold mb-3 text-lg">
                 Email
               </label>
 
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full mt-2 border rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^\S+@\S+\.\S+$/,
-                    message: "Enter a valid email",
-                  },
-                })}
-              />
+              <div className="relative">
+
+                <FaEnvelope
+                  className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 text-xl"
+                />
+
+                <input
+                  type="email"
+                  placeholder="Enter your registered email"
+                  className="w-full border-2 rounded-2xl pl-14 pr-4 py-4 text-lg outline-none focus:ring-2 focus:ring-blue-500 transition"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^\S+@\S+\.\S+$/,
+                      message: "Enter a valid email",
+                    },
+                  })}
+                />
+
+              </div>
 
               {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
+                <p className="text-red-500 mt-2">
                   {errors.email.message}
                 </p>
               )}
@@ -96,22 +119,25 @@ toast.success(response.message);
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-2xl text-xl font-semibold flex items-center justify-center gap-3 transition disabled:opacity-50"
             >
+              <FaPaperPlane />
+
               {isSubmitting
                 ? "Sending..."
                 : "Send Reset Link"}
+
             </button>
 
           </form>
 
-          <p className="text-center mt-8">
+          <p className="text-center text-lg mt-12">
 
             Remember your password?{" "}
 
             <Link
               to="/login"
-              className="text-blue-600 font-semibold"
+              className="text-blue-600 font-semibold hover:underline"
             >
               Login
             </Link>
@@ -121,6 +147,7 @@ toast.success(response.message);
         </div>
 
       </div>
+
     </div>
   );
 }

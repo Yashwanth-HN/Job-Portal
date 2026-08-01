@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext , useState } from "react";
 import AuthContext from "../../context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import logo from "../../assets/logo/careernest-logo.png";
 
 function Login() {
 
@@ -28,9 +29,16 @@ function Login() {
 
             login(response.user, response.token);
 
-              toast.success(response.message);
+            toast.success(response.message);
 
+            // Redirect based on role
+            if (response.user.role === "recruiter") {
+              navigate("/recruiter/dashboard");
+            } else if (response.user.role === "jobseeker") {
+              navigate("/jobseeker/dashboard");
+            } else {
               navigate("/");
+            }
           } catch (error) {
             toast.error(
               error.response?.data?.message || "Login failed"
@@ -43,25 +51,28 @@ function Login() {
 
         {/* Left Side */}
         <div className="bg-blue-600 text-white p-10 flex flex-col justify-center">
-          <div className="flex items-center gap-3 mb-6">
-            <FaBriefcase className="text-4xl" />
-            <h1 className="text-3xl font-bold">JobPortal</h1>
+          <div className="mb-8">
+            <img
+              src={logo}
+              alt="CareerNest"
+              className="h-80 w-auto"
+            />
           </div>
 
           <h2 className="text-4xl font-bold leading-tight">
-            Welcome Back!
-          </h2>
+              Welcome Back!
+            </h2>
 
-          <p className="mt-6 text-blue-100">
-            Login to continue exploring opportunities and manage your career.
-          </p>
+            <p className="mt-6 text-blue-100 leading-7">
+              Sign in to CareerNest and continue your journey toward your dream career.
+            </p>
         </div>
 
         {/* Right Side */}
         <div className="p-10">
 
           <h2 className="text-3xl font-bold mb-8">
-            Login
+            Sign In
           </h2>
 
          <form
